@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>API's usando Cordova</title>
+
+		<link rel="stylesheet" href="reset.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+
+		<header>
+			<div class="caixa">
+				<a href="produtos.html">
+                    <h1><img src="logo.png"></h1>
+                </a>
+			</div>
+		</header>
+
+        <main>
+
+			<form style="text-align: center;">				
+				<button type="submit" id="btnNovaImagem" class="btn btn-primary">Nova imagem</button>
+			</form>
+            <h2 class="api">The cat API</h2>
+
+            <ul data-ul class="principal">
+            </ul>
+        </main>
+
+		<footer>
+			<img src="logoFundacao.png">
+			<p class="copyright">&copy; Copyright EC7 - 2021</p>
+		</footer>
+	</body>
+
+	<script>
+		const listaNaoOrdenada = document.querySelector('[data-ul]');
+
+		const listaGatos = () => {
+			return fetch(`https://api.thecatapi.com/v1/images/search`).then( resposta => {
+				return resposta.json();
+			})
+		}
+
+		const criarNovoGato = (conselho) => {
+			const novoGato = document.createElement('li');
+			const contudoNovoGato = `<img src="${conselho}" class="img-gatos""/>`;
+			novoGato.innerHTML = contudoNovoGato;
+
+			return novoGato;
+		}
+
+		const btnNovaImagem = document.querySelector('#btnNovaImagem');
+		btnNovaImagem.addEventListener('click', event =>{
+			event.preventDefault();
+
+			listaGatos().then( data => {
+				data.forEach(element => {
+					listaNaoOrdenada.appendChild(criarNovoGato(element.url))
+				});
+			})
+		})
+
+	</script>
+</html>

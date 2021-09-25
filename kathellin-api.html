@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>API's usando Cordova</title>
+
+		<link rel="stylesheet" href="reset.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<header>
+			<div class="caixa">
+				<a href="produtos.html">
+                    <h1><img src="logo.png"></h1>
+                </a>
+			</div>
+		</header>
+
+		<main class="main-cep" data-covid>
+            <form data-vacina="">
+                <input type="button" value="Nova Citação" class="btnPais" id="btnPais">
+            </form>
+
+		</main>
+
+		<footer>
+			<img src="logoFundacao.png">
+			<p class="copyright">&copy; Copyright EC7 - 2021</p>
+		</footer>
+		
+	</body>
+
+	<script>
+
+		const btnPais = document.querySelector('#btnPais')
+
+		btnPais.addEventListener('click', event =>{
+			event.preventDefault();
+
+			const url = `https://movie-quote-api.herokuapp.com/v1/quote/`;
+			fetch(url)
+			.then(resposta => {
+				return resposta.json();
+			})
+			.then(dado => {                
+                console.log(dado)
+				atribuirCampos(dado);
+			});
+		})
+
+		function atribuirCampos(dado) {
+            
+			const quote = document.createElement('h2');
+			const role = document.createElement('h3');
+			const show = document.createElement('h4');
+            const quebraLinha = document.createElement('br');
+
+			quote.innerHTML = `<p>Citação: ${dado.quote}</p>`;
+			role.innerHTML = `Personagem: ${dado.role}`;
+			show.innerHTML = `Filme: ${dado.show}`;
+
+			const endereco = document.querySelector('[data-vacina]');
+
+			endereco.appendChild(quote);
+			endereco.appendChild(role);
+			endereco.appendChild(show);
+			endereco.appendChild(quebraLinha);
+		}
+	</script>
+</html>
