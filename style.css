@@ -266,3 +266,24 @@ td, th {
 .img-gatos {
 	width: 30%;
 }
+
+
+
+@media screen and (max-width: 480px) {
+	.caixa, .principal, .conteudo-beneficios, .mapa-conteudo, .video, .api,
+	.main-cep{
+		width: auto;
+	}
+
+	h1 {
+		text-align: center;
+	}
+
+	nav {
+		position: static;
+	}
+
+	.lista-beneficios, .imagem-beneficios, .main-cep{
+		width: 100%;
+	}
+}

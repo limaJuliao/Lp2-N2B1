@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>API's usando Cordova</title>
+
+		<link rel="stylesheet" href="reset.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<header>
+			<div class="caixa">
+				<a href="index.html">
+                    <h1><img src="logo.png"></h1>
+                </a>
+			</div>
+		</header>
+
+		<main class="main-cep">
+			<form data-vacina="">
+				<input type="submit" name="btnDados" id="btnDados" value="Checar de dados Covid no Brasil">
+			</form>
+		</main>
+
+		<footer>
+			<img src="logoFundacao.png">
+			<p class="copyright">&copy; Copyright EC7 - 2021</p>
+		</footer>
+		
+	</body>
+
+	<script>		
+		const btnPesquisarCEP = document.querySelector('#btnDados');
+		btnPesquisarCEP.addEventListener('click', event =>{
+			event.preventDefault();
+
+			const url = `https://disease.sh/v3/covid-19/countries/Brazil`;
+			fetch(url)
+			.then(resposta => {
+				return resposta.json();
+			})
+			.then(dado => {
+			console.log(dado)
+				atribuirCampos(dado);
+			});
+		})
+
+		function atribuirCampos(dado) {
+            
+			const cases = document.createElement('h2');
+			const casesPerOneMillion = document.createElement('h3');
+			const deaths = document.createElement('h4');
+			const recovered = document.createElement('h4');
+            const quebraLinha = document.createElement('br');
+
+			cases.innerHTML = `<p>Casos confirmados: ${dado.cases}</p>`;
+			casesPerOneMillion.innerHTML = `Casos por milhao de habitantes: ${dado.casesPerOneMillion}`;
+			deaths.innerHTML = `Quantidade total de mortos: ${dado.deaths}`;
+			recovered.innerHTML = `Quantidade total de recuperados: ${dado.recovered}`;
+
+			const endereco = document.querySelector('[data-vacina]');
+
+			endereco.appendChild(cases);
+			endereco.appendChild(casesPerOneMillion);
+			endereco.appendChild(deaths);
+			endereco.appendChild(recovered);
+			endereco.appendChild(quebraLinha);
+		}
+	</script>
+</html>
